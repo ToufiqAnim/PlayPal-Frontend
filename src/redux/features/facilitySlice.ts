@@ -3,9 +3,7 @@ import { RootState } from "../store";
 
 const initialState = {
   searchTerm: "",
-  priceRange: {
-    priceRange: [0, 1000],
-  },
+  priceRange: { priceRange: [0, 1000] },
   pageSize: 10,
   currentPage: 1,
 };
@@ -25,6 +23,7 @@ const facilitySlice = createSlice({
     },
   },
 });
+
 export const { setSearchTerm, setPriceRange, setCurrentPage } =
   facilitySlice.actions;
 
