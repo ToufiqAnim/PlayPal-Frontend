@@ -9,6 +9,13 @@ const facilityApi = baseApi.injectEndpoints({
       }),
       providesTags: ["Facility"],
     }),
+    getSingleFacility: builder.query({
+      query: (id) => ({
+        url: `/facility/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["Facility"],
+    }),
     createFacility: builder.mutation({
       query: (data) => ({
         url: "/facility",
@@ -17,6 +24,7 @@ const facilityApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Facility"],
     }),
+
     updateFacility: builder.mutation({
       query: ({ id, ...data }) => {
         return {
@@ -39,6 +47,7 @@ const facilityApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllFacilityQuery,
+  useGetSingleFacilityQuery,
   useCreateFacilityMutation,
   useUpdateFacilityMutation,
   useDeleteFacilityMutation,

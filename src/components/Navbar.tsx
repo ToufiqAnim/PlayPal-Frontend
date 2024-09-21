@@ -16,7 +16,9 @@ function Navbar() {
               <a className="text-lg">About Us</a>
             </li>
             <li>
-              <a className="text-lg">Facilities</a>
+              <Link to="/facility" className="text-lg">
+                Facilities
+              </Link>
             </li>
             <li>
               <Link to="/login" className="text-lg">
