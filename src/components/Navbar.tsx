@@ -1,7 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAppSelector } from "../redux/hooks";
+import { logOut, selectCurrentUser } from "../redux/features/authSlice";
+import { useDispatch } from "react-redux";
 
 function Navbar() {
+  const user = useAppSelector(selectCurrentUser);
+  console.log(user);
+  const dispatch = useDispatch();
   return (
     <div>
       <div className="navbar bg-base-100 container mx-auto">
@@ -21,10 +27,24 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/login" className="text-lg">
-                Login
-              </Link>
+              {user ? (
+                <button className="text-lg" onClick={() => dispatch(logOut())}>
+                  Logout
+                </button>
+              ) : (
+                <Link to="/login" className="text-lg">
+                  Login
+                </Link>
+              )}
             </li>
+            <li>
+              {user ? (
+                <Link to={`${user?.role}/dashboard`} className="text-lg">
+                  Dashboard
+                </Link>
+              ) : null}
+            </li>
+
             {/*      <li>
               <details>
                 <summary>Parent</summary>
