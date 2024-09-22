@@ -35,6 +35,13 @@ const FacilityDetails = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
             {facility.name}
           </h1>
+          <p className="text-gray-600 mb-6">{facility.description}</p>
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-semibold text-indigo-600">
+              ${facility.pricePerHour}
+            </span>
+            <button className="btn btn-primary"> Book Now</button>
+          </div>
         </div>
       </div>
     </div>

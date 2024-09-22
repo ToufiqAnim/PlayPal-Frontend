@@ -1,13 +1,47 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { useLoginMutation } from "../redux/api/auth/authApi";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setUser, TUser, useCurrentToken } from "../redux/features/authSlice";
+import { toast } from "sonner";
+import { verifyToken } from "../utils/verifyToken";
+import { USER_ROLE } from "../constant/UserConstant";
 
 const Login = () => {
   const {
-    register,
+    register, // Register function from react-hook-form
     handleSubmit,
-    formState: { errors },
+    formState: { errors }, // Access form errors
   } = useForm();
+  const navigate = useNavigate();
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
+  const handleOnSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("logging In...");
+
+    try {
+      const userInfo = {
+        email: data.email,
+        password: data.password,
+      };
+      const res = await login(userInfo).unwrap();
+      const user = verifyToken(res?.token) as TUser;
+      if (user?.role === USER_ROLE.user || user?.role === USER_ROLE.admin) {
+        dispatch(
+          setUser({
+            user: { ...user, name: res?.data?.name },
+            token: res.token,
+          })
+        );
+        toast.success(res?.message, { id: toastId, duration: 2000 });
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message, { id: toastId, duration: 2000 });
+    }
+  };
 
   return (
     <div className="mx-auto container">
@@ -19,7 +53,7 @@ const Login = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form onSubmit={handleSubmit(handleOnSubmit)} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -30,41 +64,35 @@ const Login = () => {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register("email", { required: "Email is required" })} // Register email
                   type="email"
-                  required
-                  autoComplete="email"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {/*  {errors.email && (
+                  <p className="text-red-600 text-sm">{errors.email.message}</p> // Display error message
+                )} */}
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })} // Register password
                   type="password"
-                  required
-                  autoComplete="current-password"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {/*   {errors.password && (
+                  <p className="text-red-600 text-sm">{errors.password.message}</p> // Display error message
+                )} */}
               </div>
             </div>
 
@@ -79,6 +107,7 @@ const Login = () => {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
+            Don't have an account?{" "}
             <Link
               to="/register"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"

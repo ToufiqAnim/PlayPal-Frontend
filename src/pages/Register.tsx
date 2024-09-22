@@ -1,12 +1,36 @@
 import React from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { USER_ROLE } from "../constant/UserConstant";
+import { useSignUpMutation } from "../redux/api/auth/authApi";
 
 const Register = () => {
+  const [signUp] = useSignUpMutation();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const toastId = toast.loading("Signing Up....");
+    try {
+      const signUpData = {
+        ...data,
+        role: USER_ROLE.user,
+      };
+      const res = await signUp(signUpData).unwrap();
+      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message, { id: toastId, duration: 2000 });
+        navigate("/");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message, { id: toastId, duration: 2000 });
+    }
+  };
 
   return (
     <div className="mx-auto container">
@@ -18,7 +42,11 @@ const Register = () => {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            method="POST"
+            className="space-y-6"
+          >
             <div>
               <label className="block text-sm font-medium leading-6 text-gray-900">
                 Name
@@ -26,13 +54,18 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="name"
-                  name="name"
+                  {...register("name", { required: "Name is required" })} // Register name field
                   type="text"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.name?.message && (
+                  <p className="text-red-600 text-sm">
+                    {String(errors.name?.message)}
+                  </p>
+                )}
               </div>
             </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -43,60 +76,96 @@ const Register = () => {
               <div className="mt-2">
                 <input
                   id="email"
-                  name="email"
+                  {...register("email", { required: "Email is required" })} // Register email field
                   type="email"
-                  required
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.email?.message && (
+                  <p className="text-red-600 text-sm">
+                    {String(errors.email?.message)}
+                  </p>
+                )}
               </div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Password
-                </label>
-              </div>
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   id="password"
-                  name="password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })} // Register password field
                   type="password"
-                  required
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
+                {errors.password?.message && (
+                  <p className="text-red-600 text-sm">
+                    {String(errors.password?.message)}
+                  </p>
+                )}
               </div>
             </div>
-            <div>
-              <div className="flex items-center justify-between">
+
+            <div className="flex justify-between">
+              <div>
                 <label
-                  htmlFor="password"
+                  htmlFor="phone"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Confirm Password
+                  Phone
                 </label>
+                <div className="mt-2">
+                  <input
+                    id="phone"
+                    {...register("phone", { required: "Phone is required" })}
+                    type="number"
+                    className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {errors.phone?.message && (
+                    <p className="text-red-600 text-sm">
+                      {String(errors.phone?.message)}
+                    </p>
+                  )}
+                </div>
               </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+
+              <div>
+                <label
+                  htmlFor="address"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Address
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="address"
+                    {...register("address", {
+                      required: "Address is required",
+                    })} // Register address field
+                    type="text"
+                    className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  />
+                  {errors.address?.message && (
+                    <p className="text-red-600 text-sm">
+                      {String(errors.address?.message)}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 p-2 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Register
               </button>
@@ -104,13 +173,13 @@ const Register = () => {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Don't have an account?
-            <a
-              href="#"
+            Already have an account?{" "}
+            <Link
+              to="/login"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              Register Here
-            </a>
+              Login Here
+            </Link>
           </p>
         </div>
       </div>
