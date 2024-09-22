@@ -1,3 +1,6 @@
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+
 export interface TFacilities {
   _id?: string;
   name: string;
@@ -10,4 +13,8 @@ export interface TFacilities {
 export type TFacilityProps = {
   filteredFacilities: TFacilities[];
   isLoading: boolean;
+};
+
+export type TFacilityIDProps = {
+  facilityId: string | undefined;
 };

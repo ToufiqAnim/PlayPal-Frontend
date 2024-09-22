@@ -19,7 +19,14 @@ function Navbar() {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a className="text-lg">About Us</a>
+              <Link to="/about" className="text-lg">
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="text-lg">
+                Contact Us
+              </Link>
             </li>
             <li>
               <Link to="/facility" className="text-lg">

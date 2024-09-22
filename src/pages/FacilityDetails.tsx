@@ -1,6 +1,6 @@
 import React from "react";
 import { useGetSingleFacilityQuery } from "../redux/api/facility/facilityApi";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { AlarmClockOff } from "lucide-react";
 
 const FacilityDetails = () => {
@@ -40,7 +40,9 @@ const FacilityDetails = () => {
             <span className="text-2xl font-semibold text-indigo-600">
               ${facility.pricePerHour}
             </span>
-            <button className="btn btn-primary"> Book Now</button>
+            <Link to={`/bookings/${id}`} className="btn btn-primary">
+              Book Now
+            </Link>
           </div>
         </div>
       </div>
