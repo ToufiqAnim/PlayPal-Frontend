@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 
 import { IBookings } from "../../../../types/booking.type";
 import React from "react";
-import { useGetAllBookingsByUserQuery } from "../../../../redux/api/booking/bookingApi";
+import { useGetAllBookingsByAdminQuery } from "../../../../redux/api/booking/bookingApi";
 
-const BookingDetailsUser = () => {
+const AdminBookingDetails = () => {
   const { bookingId } = useParams();
-  const { data: allBookings } = useGetAllBookingsByUserQuery(undefined, {
+  const { data: allBookings } = useGetAllBookingsByAdminQuery(undefined, {
     skip: !bookingId,
   });
   const singleBookingData = allBookings?.data?.find(
@@ -19,6 +19,7 @@ const BookingDetailsUser = () => {
   }
 
   const {
+    user,
     startTime,
     endTime,
     transactionId,
@@ -28,8 +29,10 @@ const BookingDetailsUser = () => {
     date,
     facility,
   } = singleBookingData;
+
   return (
     <div className="p-8 space-y-8">
+      {/* Facility Data */}
       <div className="lg:flex xl:flex shadow-lg rounded-lg overflow-hidden">
         <div className="xl:w-1/2">
           <Image
@@ -53,8 +56,8 @@ const BookingDetailsUser = () => {
               <p className="text-xl text-gray-600">
                 Location: {facility?.location}
               </p>
-              <p className="text-2xl font-semibold text-indigo-600">
-                ${facility?.pricePerHour}/<small>hour</small>
+              <p className="text-2xl font-semibold text-green-600">
+                $ {facility?.pricePerHour}/hour
               </p>
               <p className="text-gray-700">{facility?.description}</p>
             </div>
@@ -92,8 +95,23 @@ const BookingDetailsUser = () => {
           </Descriptions.Item>
         </Descriptions>
       </Card>
+
+      <Card className="shadow-lg rounded-lg">
+        <Descriptions
+          title="User Details"
+          bordered
+          layout="vertical"
+          column={2}
+        >
+          <Descriptions.Item label="Name">{user?.name}</Descriptions.Item>
+          <Descriptions.Item label="Email">{user?.email}</Descriptions.Item>
+          <Descriptions.Item label="Phone Number">
+            {user?.phone}
+          </Descriptions.Item>
+        </Descriptions>
+      </Card>
     </div>
   );
 };
 
-export default BookingDetailsUser;
+export default AdminBookingDetails;

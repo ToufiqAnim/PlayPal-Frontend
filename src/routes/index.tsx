@@ -15,6 +15,8 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Bookings from "../pages/Bookings/Bookings";
 import UserBookingDetails from "../pages/Dashboard/User/MyBookings/UserBookingDetails";
 import MyBookings from "../pages/Dashboard/User/MyBookings/MyBookings";
+import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboard";
+import Dashboard from "../components/layout/Dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -49,11 +51,20 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+
       {
         path: "bookings/:facilityId",
         element: (
           <ProtectedRoute role="user">
             <Bookings></Bookings>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoute role="user">
+            <AdminDashboard></AdminDashboard>
           </ProtectedRoute>
         ),
       },
@@ -83,5 +94,14 @@ export const router = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+
+  {
+    path: "/admin",
+    element: (
+      <ProtectedRoute role="admin">
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
   },
 ]);
