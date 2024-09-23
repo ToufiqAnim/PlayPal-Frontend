@@ -5,7 +5,7 @@ import { AlarmClockOff } from "lucide-react";
 
 const FacilityDetails = () => {
   const { id } = useParams();
-  console.log(id);
+
   const { data, isLoading } = useGetSingleFacilityQuery(id);
   const facility = data?.data;
 

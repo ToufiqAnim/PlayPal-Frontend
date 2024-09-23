@@ -13,6 +13,8 @@ import ContactUs from "../pages/Bookings/ContactUs";
 import Booking from "../pages/Bookings/BookingForm";
 import ProtectedRoute from "./ProtectedRoutes";
 import Bookings from "../pages/Bookings/Bookings";
+import UserBookingDetails from "../pages/Dashboard/User/MyBookings/UserBookingDetails";
+import MyBookings from "../pages/Dashboard/User/MyBookings/MyBookings";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +54,22 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute role="user">
             <Bookings></Bookings>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "user-bookings",
+        element: (
+          <ProtectedRoute role="user">
+            <MyBookings></MyBookings>
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "user-bookings/:bookingId",
+        element: (
+          <ProtectedRoute role="user">
+            <UserBookingDetails></UserBookingDetails>
           </ProtectedRoute>
         ),
       },

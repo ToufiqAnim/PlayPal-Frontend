@@ -5,6 +5,7 @@ import FacilityOverview from "./FacilityOverview";
 
 const Bookings = () => {
   const { facilityId } = useParams();
+
   return (
     <div>
       <FacilityOverview facilityId={facilityId}></FacilityOverview>

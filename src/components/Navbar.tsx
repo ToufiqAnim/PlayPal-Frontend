@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 
 function Navbar() {
   const user = useAppSelector(selectCurrentUser);
-  console.log(user);
+
   const dispatch = useDispatch();
   return (
     <div>
