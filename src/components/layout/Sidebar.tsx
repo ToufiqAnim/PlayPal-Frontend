@@ -1,15 +1,14 @@
 import { Layout, Menu } from "antd";
-import { sidebarItemsGenerator } from "../utils/sidebarItemsGenerator";
-import { adminPaths } from "../routes/admin.routes";
-import { userPaths } from "../routes/user.routes";
-import { USER_ROLE } from "../constant/userConstant";
-import { TUser, useCurrentToken } from "../redux/features/auth/authSlice";
 
 import { Link } from "react-router-dom";
 
 import React from "react";
 import { useAppSelector } from "../../redux/hooks";
 import { verifyToken } from "../../utils/verifyToken";
+import { TUser, useCurrentToken } from "../../redux/features/authSlice";
+import { USER_ROLE } from "../../constant/UserConstant";
+import { adminPaths } from "../../routes/adminRoutes";
+import { generateSidebarItems } from "../../utils/GenerateSIdebarItems";
 
 const { Sider } = Layout;
 
@@ -22,17 +21,15 @@ const Sidebar = () => {
     user = verifyToken(token);
   }
 
-  // const role = "admin";
-  // const role = "user";
   let sidebarItems;
 
   switch ((user as TUser)?.role) {
     case USER_ROLE.admin:
-      sidebarItems = sidebarItemsGenerator(adminPaths, USER_ROLE.admin);
+      sidebarItems = generateSidebarItems(adminPaths, USER_ROLE.admin);
 
       break;
     case USER_ROLE.user:
-      sidebarItems = sidebarItemsGenerator(userPaths, USER_ROLE.user);
+      sidebarItems = generateSidebarItems(userPaths, USER_ROLE.user);
       break;
     default:
       break;
