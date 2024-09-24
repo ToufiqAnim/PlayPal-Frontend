@@ -10,7 +10,13 @@ type TPSelectProps = {
   mode?: "multiple" | "tags" | undefined;
 };
 
-const ISelect = ({ label, name, options, disabled, mode }: TPSelectProps) => {
+const FormSelect = ({
+  label,
+  name,
+  options,
+  disabled,
+  mode,
+}: TPSelectProps) => {
   return (
     <Controller
       name={name}
@@ -30,4 +36,4 @@ const ISelect = ({ label, name, options, disabled, mode }: TPSelectProps) => {
   );
 };
 
-export default ISelect;
+export default FormSelect;

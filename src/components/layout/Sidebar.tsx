@@ -8,7 +8,7 @@ import { USER_ROLE } from "../../constant/UserConstant";
 import { adminPaths } from "../../routes/adminRoutes";
 import { generateSidebarItems } from "../../utils/GenerateSIdebarItems";
 import { userPaths } from "../../routes/userRoutes";
-import { MenuOutlined } from "@ant-design/icons";
+import { HomeOutlined, MenuOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
@@ -66,11 +66,15 @@ const Sidebar = () => {
               borderRadius: "10px",
             }}
           >
-            <Link to="/">
-              <div className="demo-logo border p-2 rounded w-full font-semibold">
-                Home
-              </div>
-            </Link>
+            <div className="flex justify-center items-center p-4">
+              <Link
+                to="/"
+                className="flex items-center text-white text-2xl font-bold"
+              >
+                <HomeOutlined className="mr-2 text-3xl" />
+                <span>Home</span>
+              </Link>
+            </div>
           </div>
           <Menu theme="dark" mode="inline" items={sidebarItems} />
         </Sider>

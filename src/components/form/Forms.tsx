@@ -16,7 +16,7 @@ type TPropsForm = {
 type TFormCofing = {
   defaultValues?: Record<string, any>;
 };
-const IForm = ({ onSubmit, children, defaultValues }: TPropsForm) => {
+const InputForm = ({ onSubmit, children, defaultValues }: TPropsForm) => {
   const formConfig: TFormCofing = {};
 
   if (defaultValues) {
@@ -38,4 +38,4 @@ const IForm = ({ onSubmit, children, defaultValues }: TPropsForm) => {
   );
 };
 
-export default IForm;
+export default InputForm;

@@ -16,86 +16,102 @@ function Navbar() {
 
   return (
     <div className="bg-white shadow-lg sticky top-0 z-50">
-      <div className="navbar bg-base-100 container mx-auto">
-        <div className="flex-1">
-          <Link to="/" className="btn btn-ghost text-2xl">
-            Playpal
-          </Link>
-        </div>
+      <div className="navbar container mx auto bg-base-100 px-4 py-3 flex justify-between items-center">
+        <Link to="/" className="text-3xl font-bold text-indigo-600">
+          Playpal
+        </Link>
 
         <div className="flex-none md:hidden">
           <button
-            className="btn btn-ghost"
+            className="focus:outline-none"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
             <MenuOutlined className="text-2xl" />
           </button>
         </div>
+        {/* For Larger Screen */}
+        <div className="hidden md:flex space-x-6 items-center">
+          <Link
+            to="/about"
+            className="text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+          >
+            About Us
+          </Link>
 
-        {/* Regular menu for larger screens */}
-        <div className="hidden md:flex flex-none">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <Link to="/about" className="text-lg">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/contact" className="text-lg">
-                Contact Us
-              </Link>
-            </li>
-            <li>
-              <Link to="/facility" className="text-lg">
-                Facilities
-              </Link>
-            </li>
-            <li>
-              {user ? (
-                <button className="text-lg" onClick={() => dispatch(logOut())}>
-                  Logout
-                </button>
-              ) : (
-                <Link to="/login" className="text-lg">
-                  Login
-                </Link>
-              )}
-            </li>
-            <li>
-              {user ? (
-                <Link to={`${user?.role}/dashboard`} className="text-lg">
-                  Dashboard
-                </Link>
-              ) : null}
-            </li>
-          </ul>
+          <Link
+            to="/contact"
+            className="text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+          >
+            Contact Us
+          </Link>
+
+          <Link
+            to="/facility"
+            className="text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+          >
+            Facilities
+          </Link>
+
+          {user ? (
+            <button
+              className="px-4 py-2 bg-red-500 text-white rounded-md font-medium hover:bg-red-600 transition"
+              onClick={() => dispatch(logOut())}
+            >
+              Logout
+            </button>
+          ) : (
+            <Link to="/login" className="text-lg">
+              Login
+            </Link>
+          )}
+
+          {user ? (
+            <Link
+              to={`${user?.role}/dashboard`}
+              className="text-lg font-medium text-gray-700 hover:text-indigo-600 transition"
+            >
+              Dashboard
+            </Link>
+          ) : null}
         </div>
       </div>
 
       {/* Dropdown menu for mobile */}
       {isMenuOpen && (
         <div className="md:hidden bg-base-100">
-          <ul className="menu px-2">
+          <ul className="menu px-4 py-3 space-y-2">
             <li>
-              <Link to="/about" className="text-lg" onClick={toggleMenu}>
+              <Link
+                to="/about"
+                className="text-lg text-gray-700 hover:text-indigo-600 transition"
+                onClick={toggleMenu}
+              >
                 About Us
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="text-lg" onClick={toggleMenu}>
+              <Link
+                to="/contact"
+                className="text-lg text-gray-700 hover:text-indigo-600 transition"
+                onClick={toggleMenu}
+              >
                 Contact Us
               </Link>
             </li>
             <li>
-              <Link to="/facility" className="text-lg" onClick={toggleMenu}>
+              <Link
+                to="/facility"
+                className="text-lg text-gray-700 hover:text-indigo-600 transition"
+                onClick={toggleMenu}
+              >
                 Facilities
               </Link>
             </li>
             <li>
               {user ? (
                 <button
-                  className="text-lg"
+                  className="text-lg text-red-500 hover:text-red-600 transition"
                   onClick={() => {
                     dispatch(logOut());
                     toggleMenu();
@@ -104,7 +120,11 @@ function Navbar() {
                   Logout
                 </button>
               ) : (
-                <Link to="/login" className="text-lg" onClick={toggleMenu}>
+                <Link
+                  to="/login"
+                  className="text-lg text-indigo-600 hover:text-indigo-700 transition"
+                  onClick={toggleMenu}
+                >
                   Login
                 </Link>
               )}
@@ -113,7 +133,7 @@ function Navbar() {
               {user ? (
                 <Link
                   to={`${user?.role}/dashboard`}
-                  className="text-lg"
+                  className="text-lg text-gray-700 hover:text-indigo-600 transition"
                   onClick={toggleMenu}
                 >
                   Dashboard

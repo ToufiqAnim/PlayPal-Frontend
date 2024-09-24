@@ -5,7 +5,7 @@ import { Controller, FieldValues, SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
 import React from "react";
-import IForm from "../../../../components/form/Forms";
+import InputForm from "../../../../components/form/Forms";
 import IInput from "../../../../components/form/Input";
 import { useCreateFacilityMutation } from "../../../../redux/api/facility/facilityApi";
 const CreateFacility = () => {
@@ -36,7 +36,7 @@ const CreateFacility = () => {
         </h2>
 
         <Row justify={"center"} align={"middle"}>
-          <IForm onSubmit={onSubmit}>
+          <InputForm onSubmit={onSubmit}>
             <IInput name="name" label="Name" type="text"></IInput>
             <IInput name="description" label="Description" type="text"></IInput>
             <IInput
@@ -62,7 +62,7 @@ const CreateFacility = () => {
             <Button type="primary" htmlType="submit">
               Create Facility
             </Button>
-          </IForm>
+          </InputForm>
         </Row>
       </div>
     </div>

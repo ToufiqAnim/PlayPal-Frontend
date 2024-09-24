@@ -12,7 +12,7 @@ import {
   useUpdateFacilityMutation,
 } from "../../../../redux/api/facility/facilityApi";
 import { TFacilities } from "../../../../types/facility.type";
-import IForm from "../../../../components/form/Forms";
+import InputForm from "../../../../components/form/Forms";
 import IInput from "../../../../components/form/Input";
 
 const UpdateFacility = () => {
@@ -66,7 +66,7 @@ const UpdateFacility = () => {
           </h2>
 
           <Row justify={"center"} align={"middle"}>
-            <IForm onSubmit={onSubmit} defaultValues={findSingleFacility}>
+            <InputForm onSubmit={onSubmit} defaultValues={findSingleFacility}>
               <IInput name="name" label="Name" type="text"></IInput>
               <IInput
                 name="description"
@@ -96,7 +96,7 @@ const UpdateFacility = () => {
               <Button type="primary" htmlType="submit">
                 Update Facility
               </Button>
-            </IForm>
+            </InputForm>
           </Row>
         </div>
       </div>

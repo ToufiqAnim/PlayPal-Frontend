@@ -4,7 +4,7 @@ import { TFacilityIDProps } from "../../types/facility.type";
 import moment from "moment";
 import { toast } from "sonner";
 import { Button, Card } from "antd";
-import IForm from "../../components/form/Forms";
+import InputForm from "../../components/form/Forms";
 import React from "react";
 import { IDatePicker, ITimePicker } from "../../components/form/Picker";
 
@@ -37,14 +37,14 @@ const BookingForm = ({ facilityId }: TFacilityIDProps) => {
   return (
     <Card>
       <h3 className="text-center text-xl font-bold">Booking Form</h3>
-      <IForm onSubmit={submitBookingForm}>
+      <InputForm onSubmit={submitBookingForm}>
         <IDatePicker label="Date" name="date"></IDatePicker>
         <ITimePicker name="startTime" label="Start Time" />
         <ITimePicker name="endTime" label="End Time" />
         <Button type="primary" htmlType="submit">
           Proced to Pay
         </Button>
-      </IForm>
+      </InputForm>
     </Card>
   );
 };

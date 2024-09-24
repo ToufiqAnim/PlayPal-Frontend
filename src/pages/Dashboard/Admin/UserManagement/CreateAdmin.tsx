@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useSignUpMutation } from "../../../../redux/api/auth/authApi";
 import { USER_ROLE } from "../../../../constant/UserConstant";
 import React from "react";
-import IForm from "../../../../components/form/Forms";
+import InputForm from "../../../../components/form/Forms";
 import IInput from "../../../../components/form/Input";
 
 const CreateAdmin = () => {
@@ -37,7 +37,7 @@ const CreateAdmin = () => {
         </h2>
 
         <Row justify={"center"} align={"middle"}>
-          <IForm onSubmit={onSubmit}>
+          <InputForm onSubmit={onSubmit}>
             <IInput
               placeholder="Name "
               name="name"
@@ -71,7 +71,7 @@ const CreateAdmin = () => {
             <Button type="primary" className=" p-5" htmlType="submit">
               Add Admin
             </Button>
-          </IForm>
+          </InputForm>
         </Row>
       </div>
     </div>
