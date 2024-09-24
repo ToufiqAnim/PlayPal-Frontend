@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { TRoute, TUserPath } from "../types";
 
-export const routeGenerators = (items: TUserPath[]) => {
+export const generateRoutes = (items: TUserPath[]) => {
   const routes = items.reduce((acc: TRoute[], item) => {
     if (item.path && item.element) {
       acc.push({

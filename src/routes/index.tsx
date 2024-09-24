@@ -4,8 +4,8 @@ import React from "react";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-import Facilities from "../pages/Facilities";
-import FacilityDetails from "../pages/FacilityDetails";
+import Facilities from "../pages/Facility/Facilities";
+import FacilityDetails from "../pages/Facility/FacilityDetails";
 import App from "../App";
 import MainLayout from "../components/layout/MainLayout";
 import AboutUs from "../pages/Bookings/AboutUs";
@@ -17,6 +17,9 @@ import UserBookingDetails from "../pages/Dashboard/User/MyBookings/UserBookingDe
 import MyBookings from "../pages/Dashboard/User/MyBookings/MyBookings";
 import AdminDashboard from "../pages/Dashboard/Admin/AdminDashboard/AdminDashboard";
 import Dashboard from "../components/layout/Dashboard";
+import { generateRoutes } from "../utils/GenerateRoutes";
+import { adminPaths } from "./adminRoutes";
+import { userPaths } from "./userRoutes";
 
 export const router = createBrowserRouter([
   {
@@ -32,18 +35,6 @@ export const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "facility",
-        element: <Facilities />,
-      },
-      {
-        path: "about",
-        element: <AboutUs />,
-      },
-      {
-        path: "contact",
-        element: <ContactUs />,
-      },
-      {
         path: "bookings",
         element: (
           <ProtectedRoute role="user">
@@ -51,7 +42,6 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
       {
         path: "bookings/:facilityId",
         element: (
@@ -61,32 +51,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "admin",
-        element: (
-          <ProtectedRoute role="user">
-            <AdminDashboard></AdminDashboard>
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "user-bookings",
-        element: (
-          <ProtectedRoute role="user">
-            <MyBookings></MyBookings>
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "user-bookings/:bookingId",
-        element: (
-          <ProtectedRoute role="user">
-            <UserBookingDetails></UserBookingDetails>
-          </ProtectedRoute>
-        ),
+        path: "facility",
+        element: <Facilities />,
       },
       {
         path: `facility/:id`,
         element: <FacilityDetails />,
+      },
+      {
+        path: "about",
+        element: <AboutUs />,
+      },
+      {
+        path: "contact",
+        element: <ContactUs />,
       },
 
       {
@@ -95,7 +73,6 @@ export const router = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "/admin",
     element: (
@@ -103,5 +80,15 @@ export const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </ProtectedRoute>
     ),
+    children: generateRoutes(adminPaths),
+  },
+  {
+    path: "/user",
+    element: (
+      <ProtectedRoute role="user">
+        <Dashboard></Dashboard>
+      </ProtectedRoute>
+    ),
+    children: generateRoutes(userPaths),
   },
 ]);

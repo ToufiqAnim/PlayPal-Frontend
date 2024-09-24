@@ -1,16 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../../redux/hooks";
 import {
   useCurrentPage,
   usePageSize,
   usePriceRange,
   useSearchTerm,
-} from "../redux/features/facilitySlice";
-import { useGetAllFacilityQuery } from "../redux/api/facility/facilityApi";
-import { TFacilities } from "../types/facility.type";
+} from "../../redux/features/facilitySlice";
+import { useGetAllFacilityQuery } from "../../redux/api/facility/facilityApi";
+import { TFacilities } from "../../types/facility.type";
 import FacilitiyList from "./FacilitiyList";
+import FacilityFilters from "./FilterFacility";
+import FacilitySearch from "./SearchFacility";
+import FacilityPagination from "./Pagination";
+import { useLocation } from "react-router-dom";
 
 const Facilities = () => {
+  const path = useLocation();
   const searchTerm = useAppSelector(useSearchTerm);
   const facilityFilter = useAppSelector(usePriceRange);
   const currentPage = useAppSelector(useCurrentPage);
@@ -42,23 +47,32 @@ const Facilities = () => {
     setPaginatedFacilities(currentFacilities);
   }, [filteredFacilities, currentPage, pageSize]);
 
+  const featuredFacilities = facilities?.slice(0, 4) || [];
+
   return (
-    <div className="space-y-8 ">
-      {/*     <HeadingComponent
-        heading={'Entire Facilities'}
-        subHeading={'Discover and book from our selection of entire facilities.'}
-    ></HeadingComponent> */}
-
-      {/*   <div className="max-w-7xl mx-auto  flex justify-between items-center">
-        <FSearch ></FSearch>
-        <FFiliter ></FFiliter>
-    </div> */}
-
-      <FacilitiyList
-        filteredFacilities={paginatedFacilities}
-        isLoading={isLoading}
-      ></FacilitiyList>
-      {/*     <FacilityPagination filteredFacilities={filteredFacilities}  ></FacilityPagination> */}
+    <div className="mt-16">
+      {path.pathname === "/" ? (
+        <FacilitiyList
+          filteredFacilities={featuredFacilities}
+          isLoading={isLoading}
+        />
+      ) : (
+        <>
+          <div className="flex justify-between items-center mx-auto container border p-3">
+            <FacilitySearch />
+            <FacilityFilters />
+          </div>
+          <FacilitiyList
+            filteredFacilities={paginatedFacilities}
+            isLoading={isLoading}
+          ></FacilitiyList>
+          <div className="mt-8">
+            <FacilityPagination
+              filteredFacilities={filteredFacilities}
+            ></FacilityPagination>
+          </div>
+        </>
+      )}
     </div>
   );
 };

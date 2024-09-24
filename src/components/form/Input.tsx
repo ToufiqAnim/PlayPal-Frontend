@@ -32,7 +32,7 @@ const IInput = ({ name, type, label, disabled, placeholder }: TInputProps) => {
             help={errorMessage}
           >
             <Input
-              className="border"
+              className="border w-64 p-2"
               {...field}
               type={type}
               id={name}

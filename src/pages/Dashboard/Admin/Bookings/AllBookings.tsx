@@ -121,7 +121,7 @@ const AllBookings = () => {
       key: "x",
       render: (item) => {
         return (
-          <Link to={`/user-bookings/${item?.key}`}>
+          <Link to={item?.key}>
             <Button>Details</Button>
           </Link>
         );

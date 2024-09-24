@@ -1,7 +1,8 @@
 import React from "react";
-import { useGetSingleFacilityQuery } from "../redux/api/facility/facilityApi";
+import { useGetSingleFacilityQuery } from "../../redux/api/facility/facilityApi";
 import { Link, useParams } from "react-router-dom";
 import { AlarmClockOff } from "lucide-react";
+import { Spin } from "antd";
 
 const FacilityDetails = () => {
   const { id } = useParams();
@@ -11,8 +12,8 @@ const FacilityDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading....
+      <div className="flex items-center justify-center col-span-full">
+        <Spin size="large" />
       </div>
     );
   }

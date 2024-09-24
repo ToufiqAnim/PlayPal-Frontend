@@ -5,6 +5,7 @@ import AllBookings from "../pages/Dashboard/Admin/Bookings/AllBookings";
 import AdminBookingDetails from "../pages/Dashboard/Admin/Bookings/AdminBookingDetails";
 import UpdateFacility from "../pages/Dashboard/Admin/Facility/UpdateFacility";
 import Facility from "../pages/Dashboard/Admin/Facility/Facility";
+import CreateAdmin from "../pages/Dashboard/Admin/UserManagement/CreateAdmin";
 
 export const adminPaths = [
   {
@@ -43,6 +44,16 @@ export const adminPaths = [
       {
         path: "all-bookings/:bookingId",
         element: <AdminBookingDetails></AdminBookingDetails>,
+      },
+    ],
+  },
+  {
+    name: "User Management",
+    children: [
+      {
+        name: "Create Admin",
+        path: "create-admin",
+        element: <CreateAdmin></CreateAdmin>,
       },
     ],
   },
